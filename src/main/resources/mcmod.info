@@ -1,9 +1,8 @@
 [
-    {
-        "modid": "simplecable",
-        "name": "Simple Cable",
-        "version": "${version}",
-        "mcversion": "[1.12,1.13)",
-        "authorList": [ "InsomniaKitten" ]
-    }
+  {
+    "modid": "simplecable",
+    "name": "Simple Cable",
+    "version": "${version}",
+    "authorList": [ "InsomniaKitten" ]
+  }
 ]

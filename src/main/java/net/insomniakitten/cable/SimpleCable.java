@@ -1,8 +1,9 @@
 package net.insomniakitten.cable;
 
-import com.google.common.collect.ImmutableMap;
 import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.client.renderer.block.statemap.StateMapperBase;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -13,62 +14,63 @@ import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.Mod.InstanceFactory;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry.ObjectHolder;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import net.minecraftforge.registries.IForgeRegistryEntry;
 
-import javax.annotation.Nullable;
-
-import static java.util.Objects.requireNonNull;
-
-@Mod(modid = "simplecable", name = "Simple Cable", version = "%VERSION%")
+@Mod(
+    modid = "simplecable",
+    name = "Simple Cable",
+    version = "%VERSION%",
+    acceptedMinecraftVersions = "[1.12,1.13)"
+)
 public final class SimpleCable {
     @ObjectHolder("simplecable:cable")
-    private static final Block BLOCK = null;
+    private static final Block BLOCK = Blocks.AIR;
 
     @ObjectHolder("simplecable:cable")
-    private static final Item ITEM = null;
+    private static final Item ITEM = Items.AIR;
 
-    {
+    private static final SimpleCable INSTANCE = new SimpleCable();
+
+    private SimpleCable() {
         MinecraftForge.EVENT_BUS.register(this);
     }
 
+    @InstanceFactory
+    public static SimpleCable getInstance() {
+        return SimpleCable.INSTANCE;
+    }
+
     @SubscribeEvent
-    protected void onBlockRegistry(RegistryEvent.Register<Block> event) {
-        event.getRegistry().register(new CableBlock().setRegistryName("cable")
-                .setUnlocalizedName("simplecable.cable")
-                .setCreativeTab(CreativeTabs.REDSTONE)
+    void onBlockRegistry(RegistryEvent.Register<Block> event) {
+        event.getRegistry().register(new CableBlock()
+            .setRegistryName("cable")
+            .setUnlocalizedName("simplecable.cable")
+            .setCreativeTab(CreativeTabs.REDSTONE)
         );
     }
 
     @SubscribeEvent
-    protected void onItemRegistry(RegistryEvent.Register<Item> event) {
-        event.getRegistry().register(new ItemBlock(requireNotEmpty(BLOCK)).setRegistryName("cable"));
+    void onItemRegistry(RegistryEvent.Register<Item> event) {
+        event.getRegistry().register(new ItemBlock(SimpleCable.BLOCK)
+            .setRegistryName("cable")
+        );
     }
 
     @SubscribeEvent
     @SideOnly(Side.CLIENT)
-    protected void onModelRegistry(ModelRegistryEvent event) {
-        ModelLoader.setCustomModelResourceLocation(requireNotEmpty(ITEM), 0,
-                new ModelResourceLocation("simplecable:cable", "inventory")
+    void onModelRegistry(ModelRegistryEvent event) {
+        ModelLoader.setCustomModelResourceLocation(SimpleCable.ITEM, 0,
+            new ModelResourceLocation("simplecable:cable", "inventory")
         );
-
-        final ModelResourceLocation mrl = new ModelResourceLocation("simplecable:cable", "normal");
-        ModelLoader.setCustomStateMapper(requireNotEmpty(BLOCK), block ->
-                block.getBlockState().getValidStates().stream().collect(
-                        ImmutableMap.toImmutableMap(it -> it, it -> mrl)
-                )
-        );
-    }
-
-    private static <T extends IForgeRegistryEntry<T>> T requireNotEmpty(@Nullable T entry) {
-        requireNonNull(entry, "Registry entry cannot be null!");
-        requireNonNull(entry.getRegistryName(), "Registry name cannot be null!");
-        if (entry == Blocks.AIR || entry == Items.AIR) {
-            throw new IllegalStateException("ObjectHolder field was not populated correctly!");
-        }
-        return entry;
+        ModelLoader.setCustomStateMapper(SimpleCable.BLOCK, new StateMapperBase() {
+            @Override
+            protected ModelResourceLocation getModelResourceLocation(IBlockState state) {
+                return new ModelResourceLocation("simplecable:cable", "normal");
+            }
+        });
     }
 }

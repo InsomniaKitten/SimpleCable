@@ -1,16 +1,16 @@
 {
-    "__comment": "Copyright © InsomniaKitten 2017",
-    "textures": {
-        "particle": "simplecable:blocks/cable_particle",
-        "texture": "simplecable:blocks/cable_all"
-    },
-    "elements": [
-        {
-            "from": [ 6, 6, 6 ],
-            "to": [ 10, 10, 10 ],
-            "faces": {
-                "north": { "uv": [ 6, 6, 10, 10 ], "tintindex": 0, "texture": "#texture" }
-            }
-        }
-    ]
+  "__comment": "Copyright © InsomniaKitten 2018",
+  "textures": {
+    "particle": "simplecable:blocks/cable_particle",
+    "texture": "simplecable:blocks/cable_all"
+  },
+  "elements": [
+    {
+      "from": [ 6, 6, 6 ],
+      "to": [ 10, 10, 10 ],
+      "faces": {
+        "north": { "uv": [ 6, 6, 10, 10 ], "tintindex": 0, "texture": "#texture" }
+      }
+    }
+  ]
 }
