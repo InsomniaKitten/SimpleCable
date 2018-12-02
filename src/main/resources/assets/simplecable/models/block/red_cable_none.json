@@ -1,0 +1,6 @@
+{
+  "parent": "simplecable:block/cable_none",
+  "textures": {
+    "texture": "simplecable:blocks/red_cable"
+  }
+}

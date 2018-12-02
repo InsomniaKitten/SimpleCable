@@ -2,7 +2,7 @@
   {
     "modid": "simplecable",
     "name": "Simple Cable",
-    "version": "${version}",
+    "version": "$version",
     "authorList": [ "InsomniaKitten" ]
   }
 ]

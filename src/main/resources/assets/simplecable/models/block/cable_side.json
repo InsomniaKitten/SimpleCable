@@ -1,25 +1,23 @@
 {
-  "__comment": "Copyright © InsomniaKitten 2018",
   "textures": {
-    "particle": "simplecable:blocks/cable_particle",
-    "texture": "simplecable:blocks/cable_all"
+    "particle": "#texture"
   },
   "elements": [
     {
       "from": [ 6, 6, 0 ],
       "to": [ 10, 10, 6 ],
       "faces": {
-        "down": { "uv": [ 6, 10, 10, 16 ], "texture": "#texture", "tintindex": 0 },
-        "up": { "uv": [ 6, 0, 10, 6 ], "texture": "#texture", "tintindex": 0 },
-        "west": { "uv": [ 0, 6, 6, 10 ], "texture": "#texture", "tintindex": 0 },
-        "east": { "uv": [ 10, 6, 16, 10 ], "texture": "#texture", "tintindex": 0 }
+        "down": { "uv": [ 6, 10, 10, 16 ], "texture": "#texture" },
+        "up": { "uv": [ 6, 0, 10, 6 ], "texture": "#texture" },
+        "west": { "uv": [ 0, 6, 6, 10 ], "texture": "#texture" },
+        "east": { "uv": [ 10, 6, 16, 10 ], "texture": "#texture" }
       }
     },
     {
       "from": [ 6, 6, 0 ],
       "to": [ 10, 10, 6 ],
       "faces": {
-        "north": { "uv": [ 6, 6, 10, 10 ], "texture": "#texture", "tintindex": 0, "cullface": "north" }
+        "north": { "uv": [ 6, 6, 10, 10 ], "texture": "#texture", "cullface": "north" }
       }
     }
   ]
