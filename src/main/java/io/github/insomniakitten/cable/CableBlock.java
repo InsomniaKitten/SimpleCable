@@ -74,7 +74,7 @@ final class CableBlock extends Block {
     }
 
     @Override
-    public int getMetaFromState(IBlockState state) {
+    public int getMetaFromState(final IBlockState state) {
         return state.getValue(CableColor.property()).ordinal();
     }
 
@@ -90,7 +90,7 @@ final class CableBlock extends Block {
 
     @Override
     @Deprecated
-    public boolean isFullCube(IBlockState state) {
+    public boolean isFullCube(final IBlockState state) {
         return false;
     }
 
@@ -104,7 +104,7 @@ final class CableBlock extends Block {
                 box = box.union(CableBlock.BOUNDING_BOXES.get(e.getKey()));
             }
         }
-        return box.offset(pos);
+        return box;
     }
 
     @Override
