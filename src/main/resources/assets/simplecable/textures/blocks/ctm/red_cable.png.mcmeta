@@ -1,0 +1,9 @@
+{
+  "ctm": {
+    "ctm_version": 1,
+    "type": "CTM",
+    "textures": [
+      "simplecable:blocks/ctm/red_cable_ctm"
+    ]
+  }
+}
