@@ -66,15 +66,14 @@ final class CableBlock extends Block {
         }));
 
     CableBlock() {
-        super(Material.CIRCUITS);
+        super(Material.CLOTH);
         IBlockState defaultState = this.getDefaultState();
         for (final PropertyBool property : CableBlock.SIDES.values()) {
             defaultState = defaultState.withProperty(property, true);
         }
         this.setDefaultState(defaultState);
-        this.setSoundType(SoundType.METAL);
-        this.setHardness(0.5F);
-        this.setResistance(2.5F);
+        this.setSoundType(SoundType.CLOTH);
+        this.setHardness(0.25F);
         this.setLightOpacity(0);
     }
 
