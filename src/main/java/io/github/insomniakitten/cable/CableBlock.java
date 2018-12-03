@@ -47,7 +47,7 @@ final class CableBlock extends Block {
         .collect(Maps.toImmutableEnumMap(Function.identity(), f -> PropertyBool.create(f.getName())));
 
     private static final AxisAlignedBB BOUNDING_BOX = new AxisAlignedBB(
-        0.375D, 0.375D, 0.375D, 0.625D, 0.625D, 0.625D
+        0.375, 0.375, 0.375, 0.625, 0.625, 0.625
     );
 
     private static final Map<EnumFacing, AxisAlignedBB> BOUNDING_BOXES = Stream.of(EnumFacing.VALUES)
@@ -169,7 +169,7 @@ final class CableBlock extends Block {
             }
         }
         @Nullable RayTraceResult ret = null;
-        double sqrDis = 0.0D;
+        double sqrDis = 0.0;
         for (final RayTraceResult result : results) {
             final double newSqrDis = result.hitVec.squareDistanceTo(end);
             if (newSqrDis > sqrDis) {
