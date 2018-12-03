@@ -25,9 +25,9 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.Mod.InstanceFactory;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry.ObjectHolder;
@@ -36,6 +36,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nullable;
 
+@EventBusSubscriber
 @Mod(modid = SimpleCable.ID, useMetadata = true, acceptedMinecraftVersions = "[1.12,1.13)")
 public final class SimpleCable {
     public static final String ID = "simplecable";
@@ -50,10 +51,6 @@ public final class SimpleCable {
     @Nullable
     @ObjectHolder(SimpleCable.CABLE)
     private static CableBlockItem cableBlockItem;
-
-    static {
-        MinecraftForge.EVENT_BUS.register(SimpleCable.INSTANCE);
-    }
 
     private SimpleCable() {}
 
@@ -75,7 +72,7 @@ public final class SimpleCable {
     }
 
     @SubscribeEvent
-    void onRegisterBlockEvent(final RegistryEvent.Register<Block> event) {
+    static void onRegisterBlockEvent(final RegistryEvent.Register<Block> event) {
         final Block block = new CableBlock();
         block.setRegistryName(SimpleCable.CABLE);
         block.setTranslationKey(SimpleCable.ID + ".cable");
@@ -84,7 +81,7 @@ public final class SimpleCable {
     }
 
     @SubscribeEvent
-    void onRegisterItemEvent(final RegistryEvent.Register<Item> event) {
+    static void onRegisterItemEvent(final RegistryEvent.Register<Item> event) {
         final Item item = new CableBlockItem(SimpleCable.block());
         item.setRegistryName(SimpleCable.CABLE);
         event.getRegistry().register(item);
@@ -92,7 +89,7 @@ public final class SimpleCable {
 
     @SubscribeEvent
     @SideOnly(Side.CLIENT)
-    void onModelRegistryEvent(final ModelRegistryEvent event) {
+    static void onModelRegistryEvent(final ModelRegistryEvent event) {
         final Item item = SimpleCable.item();
         for (final CableColor color : CableColor.colors()) {
             final ModelResourceLocation model = new ModelResourceLocation(color.path(), "inventory");
