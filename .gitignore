@@ -18,3 +18,7 @@ out/
 .gradle/
 build/
 run/
+
+# docs
+cubik/
+psd/
