@@ -4,6 +4,9 @@
     "type": "CTM",
     "textures": [
       "simplecable:blocks/ctm/green_cable_ctm"
-    ]
+    ],
+    "extra": {
+      "connect_inside": true
+    }
   }
 }
