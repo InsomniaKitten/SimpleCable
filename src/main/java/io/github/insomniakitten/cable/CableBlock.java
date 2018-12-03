@@ -1,3 +1,19 @@
+/*
+ * Copyright (C) 2018 InsomniaKitten
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package io.github.insomniakitten.cable;
 
 import com.google.common.collect.Maps;
@@ -18,6 +34,7 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
+import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -82,7 +99,7 @@ final class CableBlock extends Block {
     @Deprecated
     public IBlockState getActualState(final IBlockState state, final IBlockAccess access, final BlockPos pos) {
         IBlockState actualState = state;
-        for (Entry<EnumFacing, PropertyBool> e : CableBlock.SIDES.entrySet()) {
+        for (final Entry<EnumFacing, PropertyBool> e : CableBlock.SIDES.entrySet()) {
             actualState = actualState.withProperty(e.getValue(), this.canConnectTo(state, access, pos, e.getKey()));
         }
         return actualState;
@@ -99,7 +116,7 @@ final class CableBlock extends Block {
     public AxisAlignedBB getBoundingBox(final IBlockState state, final IBlockAccess access, final BlockPos pos) {
         final IBlockState actualState = state.getActualState(access, pos);
         AxisAlignedBB box = CableBlock.BOUNDING_BOX;
-        for (Entry<EnumFacing, PropertyBool> e : CableBlock.SIDES.entrySet()) {
+        for (final Entry<EnumFacing, PropertyBool> e : CableBlock.SIDES.entrySet()) {
             if (actualState.getValue(e.getValue())) {
                 box = box.union(CableBlock.BOUNDING_BOXES.get(e.getKey()));
             }
@@ -109,10 +126,10 @@ final class CableBlock extends Block {
 
     @Override
     @Deprecated
-    public void addCollisionBoxToList(final IBlockState state, final World world, final BlockPos pos, final AxisAlignedBB entityBox, final List<AxisAlignedBB> boxes, final Entity entity, final boolean isActualState) {
+    public void addCollisionBoxToList(final IBlockState state, final World world, final BlockPos pos, final AxisAlignedBB entityBox, final List<AxisAlignedBB> boxes, @Nullable final Entity entity, final boolean isActualState) {
         final IBlockState actualState = isActualState ? state : state.getActualState(world, pos);
         Block.addCollisionBoxToList(pos, entityBox, boxes, CableBlock.BOUNDING_BOX);
-        for (Entry<EnumFacing, PropertyBool> e : CableBlock.SIDES.entrySet()) {
+        for (final Entry<EnumFacing, PropertyBool> e : CableBlock.SIDES.entrySet()) {
             if (actualState.getValue(e.getValue())) {
                 final AxisAlignedBB box = CableBlock.BOUNDING_BOXES.get(e.getKey());
                 Block.addCollisionBoxToList(pos, entityBox, boxes, box);
@@ -136,7 +153,7 @@ final class CableBlock extends Block {
     public RayTraceResult collisionRayTrace(final IBlockState state, final World world, final BlockPos pos, final Vec3d start, final Vec3d end) {
         final IBlockState actualState = state.getActualState(world, pos);
         final Set<AxisAlignedBB> boxes = Sets.newHashSet(CableBlock.BOUNDING_BOX);
-        for (Entry<EnumFacing, PropertyBool> e : CableBlock.SIDES.entrySet()) {
+        for (final Entry<EnumFacing, PropertyBool> e : CableBlock.SIDES.entrySet()) {
             if (actualState.getValue(e.getValue())) {
                 boxes.add(CableBlock.BOUNDING_BOXES.get(e.getKey()));
             }
@@ -145,13 +162,13 @@ final class CableBlock extends Block {
         final Vec3d min = start.subtract(pos.getX(), pos.getY(), pos.getZ());
         final Vec3d max = end.subtract(pos.getX(), pos.getY(), pos.getZ());
         for (final AxisAlignedBB box : boxes) {
-            final RayTraceResult result = box.calculateIntercept(min, max);
+            @Nullable final RayTraceResult result = box.calculateIntercept(min, max);
             if (result != null) {
                 final Vec3d vec = result.hitVec.add(pos.getX(), pos.getY(), pos.getZ());
                 results.add(new RayTraceResult(vec, result.sideHit, pos));
             }
         }
-        RayTraceResult ret = null;
+        @Nullable RayTraceResult ret = null;
         double sqrDis = 0.0D;
         for (final RayTraceResult result : results) {
             final double newSqrDis = result.hitVec.squareDistanceTo(end);

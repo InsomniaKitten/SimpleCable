@@ -44,11 +44,11 @@ enum CableColor implements IStringSerializable {
     }
 
     static IProperty<CableColor> property() {
-        return COLOR;
+        return CableColor.COLOR;
     }
 
     static ImmutableSet<CableColor> colors() {
-        return COLORS;
+        return CableColor.COLORS;
     }
 
     static CableColor valueOf(final int ordinal) {
